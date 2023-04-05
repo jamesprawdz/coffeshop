@@ -8,8 +8,12 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import IndividualProductPage from "./IndividualProductPage";
 
-
-function LoggedIn({ setIsAuthenticated, isAuthenticated, currentUser }) {
+function LoggedIn({
+  setIsAuthenticated,
+  isAuthenticated,
+  currentUser,
+  setCurrentUser,
+}) {
   const [cart, setCart] = useState([]);
   const [quantity, setQuantity] = useState(1);
   const [products, setProducts] = useState([]);
@@ -103,12 +107,23 @@ function LoggedIn({ setIsAuthenticated, isAuthenticated, currentUser }) {
       });
   };
 
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const filteredProducts = products.filter((product) =>
+    product.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
   return (
     <div>
       <LoggedInNav
         setIsAuthenticated={setIsAuthenticated}
         currentUser={currentUser}
         cart={cart}
+        searchTerm={searchTerm}
+        handleChange={handleChange}
       />
       <Routes>
         <Route
@@ -128,13 +143,19 @@ function LoggedIn({ setIsAuthenticated, isAuthenticated, currentUser }) {
               setProducts={setProducts}
               quantity={quantity}
               setQuantity={setQuantity}
+              filteredProducts={filteredProducts}
             />
           }
         />
         <Route
           path="/cart"
           element={
-            <Cart currentUser={currentUser} cart={cart} setCart={setCart} />
+            <Cart
+              currentUser={currentUser}
+              setCurrentUser={setCurrentUser}
+              cart={cart}
+              setCart={setCart}
+            />
           }
         />
         <Route

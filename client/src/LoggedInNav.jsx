@@ -1,7 +1,12 @@
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-const LoggedInNav = ({ setIsAuthenticated, cart }) => {
+const LoggedInNav = ({
+  setIsAuthenticated,
+  cart,
+  searchTerm,
+  handleChange,
+}) => {
   const navigate = useNavigate();
 
   const handleLogOut = () => {
@@ -28,6 +33,7 @@ const LoggedInNav = ({ setIsAuthenticated, cart }) => {
           <div className="flex w-full items-center">
             <a href="#">
               <img
+                onClick={() => navigate("/")}
                 className="h-12"
                 src="https://static.shuffle.dev/uploads/files/38/386a61c1d26eee345791659a05e5a92b90cec72e/Screenshot-2023-03-17-at-4-52-59-PM.png"
                 alt=""
@@ -48,7 +54,9 @@ const LoggedInNav = ({ setIsAuthenticated, cart }) => {
                   className="flex items-center font-medium hover:text-darkBlueGray-400"
                   href="#"
                 >
-                  <span className="mr-4">Products</span>
+                  <span className="mr-4" onClick={() => navigate("/shop")}>
+                    Products
+                  </span>
                   <svg
                     width="8"
                     height="5"
@@ -389,37 +397,32 @@ const LoggedInNav = ({ setIsAuthenticated, cart }) => {
                   className="font-medium hover:text-darkBlueGray-400"
                   href="#"
                   contenteditable="false"
-                  navigate="/"
+                  onClick={() => navigate("/")}
                 >
                   About Us
                 </a>
               </li>
             </ul>
             <div className="relative hidden xl:block">
-              <img
-                className="absolute top-1/2 transform -translate-y-2/4 pl-6 mt-px"
-                src="uinel-assets/elements/navigations/search-gray-icon.svg"
-                alt=""
-              />
               <input
-                className="rounded-4xl py-3 pl-12 pr-5 text-gray-300 font-heading font-medium text-base bg-blue-50 border-2 border-blueGray-100 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 outline-none"
+                className="rounded-4xl py-3 pl-5 pr-5 text-gray-300 font-heading font-medium text-base bg-blue-50 border-2 border-blueGray-100 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 outline-none"
                 style={{ width: "180px" }}
+                value={searchTerm}
+                onChange={handleChange}
+                placeholder="Search for products..."
               />
             </div>
             <div className="hidden md:block flex-shrink-0 w-px h-12 bg-gray-100 ml-12 mr-12"></div>
             <div className="hidden xl:flex items-center">
               <a
-                className="inline-block mr-10 text-gray-400 hover:text-gray-500"
-                href="#"
-              ></a>
-              <a
                 className="relative inline-block text-gray-400 hover:text-gray-500"
                 href="#"
               >
                 <div className="absolute bottom-0 right-0 flex items-center justify-center -mb-4 -mr-4 w-6 h-6 text-sm text-white bg-blue-500 rounded-full">
-                {cartItemCount > 0 && <span>({cartItemCount})</span>}
+                  {cartItemCount > 0 && <span>({cartItemCount})</span>}
                 </div>
                 <svg
+                  onClick={() => navigate("/cart")}
                   width="21"
                   height="23"
                   viewBox="0 0 21 23"
@@ -447,9 +450,15 @@ const LoggedInNav = ({ setIsAuthenticated, cart }) => {
                 className="flex items-center text-darkBlueGray-400 hover:text-darkBlueGray-500"
                 href="#"
               >
-                <span className="font-medium">Sona</span>
+                <span
+                  className="font-medium"
+                  onClick={() => navigate("/account")}
+                >
+                  Sona
+                </span>
 
                 <svg
+                  onClick={handleLogOut}
                   className="ml-4"
                   width="8"
                   height="5"

@@ -7,28 +7,11 @@ function ProductPage({
   products,
   quantity,
   setQuantity,
+  filteredProducts,
 }) {
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const handleChange = (event) => {
-    setSearchTerm(event.target.value);
-  };
-
-  const filteredProducts = products.filter((product) =>
-    product.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
   return (
     <div className="product-page">
-      <div className="search-h1">
-        <h1 className="text-3xl font-bold underline">Shop</h1>
-        <input
-          type="text"
-          placeholder="Search products..."
-          value={searchTerm}
-          onChange={handleChange}
-        />
-      </div>
+      <h1 className="shop-header">Shop</h1>
       <ProductList
         className="product-list"
         products={filteredProducts}

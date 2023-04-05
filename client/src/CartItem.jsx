@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import "./cart.css";
 
 function CartItem({ item, setCart, setCurrentUser }) {
   const [quantity, setQuantity] = useState(item.quantity);
@@ -61,17 +62,56 @@ function CartItem({ item, setCart, setCurrentUser }) {
   };
 
   return (
-    <div>
-      <h3>{item.product.name}</h3>
-      <p>Price: {item.product.price}</p>
-      <p>Quantity: {quantity}</p>
-      <button onClick={() => handleUpdateQuantity(quantity - 1)}>
-        Decrease quantity
+    <div className="product">
+      {/* Product image */}
+      {item.product.image && (
+        <img src={item.product.image} alt={item.product.name} />
+      )}
+
+      <div>
+        <span>{item.product.name}</span>
+        <label className="price small">${item.product.price * quantity}</label>
+      </div>
+      <div className="quantity">
+        <button onClick={() => handleUpdateQuantity(quantity - 1)}>
+          <svg
+            fill="none"
+            viewBox="0 0 24 24"
+            height="14"
+            width="14"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              strokeLinejoin="round"
+              strokeLinecap="round"
+              strokeWidth="2.5"
+              stroke="#47484b"
+              d="M20 12L4 12"
+            ></path>
+          </svg>
+        </button>
+        <label>{quantity}</label>
+        <button onClick={() => handleUpdateQuantity(quantity + 1)}>
+          <svg
+            fill="none"
+            viewBox="0 0 24 24"
+            height="14"
+            width="14"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              strokeLinejoin="round"
+              strokeLinecap="round"
+              strokeWidth="2.5"
+              stroke="#47484b"
+              d="M12 4V20M20 12H4"
+            ></path>
+          </svg>
+        </button>
+      </div>
+      <button className="remove-from-cart-btn" onClick={handleRemoveItem}>
+        Remove
       </button>
-      <button onClick={() => handleUpdateQuantity(quantity + 1)}>
-        Increase quantity
-      </button>
-      <button onClick={handleRemoveItem}>Remove from cart</button>
     </div>
   );
 }
