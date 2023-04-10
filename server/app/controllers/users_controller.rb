@@ -24,6 +24,15 @@ class UsersController < ApplicationController
         end
     end
 
+    def destroy
+      if current_user
+        current_user.destroy
+        render json: { message: 'User and associated records successfully deleted.' }, status: :ok
+      else
+        render json: { errors: ['Not authorized'] }, status: :unauthorized
+      end
+    end
+
     def account_info
         if session[:user_id]
           user = User.find(session[:user_id])
@@ -33,6 +42,25 @@ class UsersController < ApplicationController
             first_name: user.first_name,
             last_name: user.last_name
           }
+        else
+          render json: { error: 'User not logged in' }, status: :unauthorized
+        end
+      end
+
+      def update
+        if session[:user_id]
+          user = User.find(session[:user_id])
+    
+          if user.update(user_params)
+            render json: {
+              email: user.email,
+              username: user.username,
+              first_name: user.first_name,
+              last_name: user.last_name
+            }
+          else
+            render json: { error: 'Failed to update user' }, status: :unprocessable_entity
+          end
         else
           render json: { error: 'User not logged in' }, status: :unauthorized
         end

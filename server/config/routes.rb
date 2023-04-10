@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get 'payment_links/create'
+  # get 'payment_links/create'
   resources :orders
   resources :cart_items
   resources :products
@@ -11,11 +11,13 @@ Rails.application.routes.draw do
   # delete '/clearCart', to: 'cart#destroy'
 
   post "/users", to: "users#create"
+  delete "/account", to: "users#destroy"
   get "/me", to: "users#show"
   post "/login", to: "sessions#create" 
   delete "/logout", to: "sessions#destroy"
 
   get '/account', to: 'users#account_info'
+  put '/account', to: 'users#update'
 
   get '/products', to: 'products#index'
   get '/products/:id', to: 'products#show'
