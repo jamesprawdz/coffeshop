@@ -60,7 +60,7 @@ const LoginForm = ({ setCurrentUser, setIsAuthenticated }) => {
               className="input"
               placeholder="Password"
               required=""
-              type="text"
+              type="password"
               name="password"
               checked={formData.password}
               onChange={handleChange}

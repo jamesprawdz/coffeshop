@@ -17,7 +17,8 @@ function LoggedIn({
   const [cart, setCart] = useState([]);
   const [quantity, setQuantity] = useState(1);
   const [products, setProducts] = useState([]);
-
+  const [searchTerm, setSearchTerm] = useState("");
+  
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -55,32 +56,6 @@ function LoggedIn({
       });
   }, []);
 
-  // const addToCart = (product) => {
-  //   if (!product || !product.id) {
-  //     console.log("Invalid product");
-  //     return;
-  //   }
-
-  //   // Make a POST request to add the product to the cart
-  //   axios
-  //     .post(
-  //       "/cart_items",
-  //       {
-  //         user_id: currentUser.id,
-  //         cart_id: currentUser.cart.id,
-  //         product_id: product.id,
-  //         quantity: quantity,
-  //       },
-  //       { withCredentials: true }
-  //     )
-  //     .then((response) => {
-  //       setCart(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
-
   const addToCart = async (product) => {
     if (!product || !product.id) {
       console.log("Invalid product");
@@ -107,7 +82,6 @@ function LoggedIn({
       });
   };
 
-  const [searchTerm, setSearchTerm] = useState("");
 
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
